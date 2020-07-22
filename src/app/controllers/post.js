@@ -9,14 +9,14 @@ module.exports = {
     });
   },
   create: async (req, res) => {
+    const image = req.file.filename;
     const { username, title, description, content } = req.body;
-    const newPost = new post({ username, title, description, content });
+    const newPost = new post({ username, title, description, content, image });
     await newPost.save();
     res.redirect("/");
   },
   getPost: async (req, res) => {
     const postId = await post.findById(req.params.id).lean();
-    console.log(postId);
     res.render("post", {
       title: "Post",
       postId,
